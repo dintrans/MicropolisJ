@@ -198,7 +198,7 @@ public class TileConstants
 	{
 		// can we autobulldoze this tile?
 		return (
-		(tileValue >= FIRSTRIVEDGE && tileValue <= LASTRUBBLE) ||
+		(tileValue >= RIVER && tileValue <= LASTRUBBLE) ||
 		(tileValue >= TINYEXP && tileValue <= LASTTINYEXP)
 		);
 	}
@@ -212,7 +212,7 @@ public class TileConstants
 		//FIXME- what is significance of POWERBASE+2 and POWERBASE+12 ?
 
 		// can we autobulldoze this tile?
-		if ((tileValue >= FIRSTRIVEDGE && tileValue <= LASTRUBBLE) ||
+		if ((tileValue >= RIVER && tileValue <= LASTRUBBLE) ||
 			(tileValue >= POWERBASE + 2 && tileValue <= POWERBASE + 12) ||
 			(tileValue >= TINYEXP && tileValue <= LASTTINYEXP))
 		{
