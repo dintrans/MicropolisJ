@@ -40,7 +40,13 @@ public class GraphsPane extends JPanel
 		INDPOP,
 		MONEY,
 		CRIME,
-		POLLUTION;
+		POLLUTION,
+		POPULATION,
+		RATING,
+		HOUSING,
+		TAXES,
+		TRAFFIC,
+		UNEMPLOYMENT;
 	}
 	EnumMap<GraphData,JToggleButton> dataBtns = new EnumMap<GraphData,JToggleButton>(GraphData.class);
 
@@ -116,6 +122,28 @@ public class GraphsPane extends JPanel
 
 		c.gridy = 4;
 		toolsPane.add(makeDataBtn(GraphData.POLLUTION), c);
+
+
+		c.gridx = 2;
+		c.gridy = 2;
+		toolsPane.add(makeDataBtn(GraphData.POPULATION), c);
+
+		c.gridy = 3;
+		toolsPane.add(makeDataBtn(GraphData.RATING), c);
+
+		c.gridy = 4;
+		toolsPane.add(makeDataBtn(GraphData.HOUSING), c);
+
+
+		c.gridx = 3;
+		c.gridy = 2;
+		toolsPane.add(makeDataBtn(GraphData.TAXES), c);
+
+		c.gridy = 3;
+		toolsPane.add(makeDataBtn(GraphData.TRAFFIC), c);
+
+		c.gridy = 4;
+		toolsPane.add(makeDataBtn(GraphData.UNEMPLOYMENT), c);
 
 		graphArea = new GraphArea();
 		b1.add(graphArea, BorderLayout.CENTER);
@@ -202,8 +230,14 @@ public class GraphsPane extends JPanel
 		case INDPOP: return engine.history.ind[pos];
 		case MONEY: return engine.history.money[pos];
 		case CRIME: return engine.history.crime[pos];
-		case POLLUTION: return engine.history.pollution[pos];
-		default: throw new Error("unexpected");
+		case POLLUTION: return engine.history.crime[pos];
+		case POPULATION: return engine.history.pop[pos];
+		case RATING: return engine.history.rating[pos];
+		case HOUSING: return engine.history.house[pos];
+		case TAXES: return engine.history.tax[pos];
+		case TRAFFIC: return engine.history.traffic[pos];
+		case UNEMPLOYMENT: return engine.history.unempl[pos];
+		default: throw new Error("unexpected "+graph);
 		}
 	}
 
