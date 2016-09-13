@@ -11,7 +11,7 @@ package micropolisj.engine;
 public class GameLevel
 {
 	public static final int MIN_LEVEL = 0;
-	public static final int MAX_LEVEL = 2;
+	public static final int MAX_LEVEL = 4;
 
 	public static boolean isValid(int lev)
 	{
@@ -21,9 +21,11 @@ public class GameLevel
 	public static int getStartingFunds(int lev)
 	{
 		switch (lev) {
-		case 0: return 20000;
-		case 1: return 10000;
-		case 2: return 5000;
+		case 0: return 50000;
+		case 1: return 20000;
+		case 2: return 10000;
+		case 3: return 5000;
+		case 4: return 3000;
 		default:
 			throw new Error("unexpected game level: "+lev);
 		}

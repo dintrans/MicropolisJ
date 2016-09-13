@@ -901,7 +901,7 @@ public class Micropolis
 			floodCnt--;
 		}
 
-		final int [] DisChance = { 480, 240, 60 };
+		final int [] DisChance = { 960, 480, 240, 60, 20 };
 		if (noDisasters)
 			return;
 
@@ -1281,6 +1281,12 @@ public class Micropolis
 		public int [] money = new int[240];
 		public int [] pollution = new int[240];
 		public int [] crime = new int[240];
+		public int [] pop = new int[240];
+		public int [] rating = new int[240];
+		public int [] house = new int[240];
+		public int [] tax = new int[240];
+		public int [] traffic = new int[240];
+		public int [] unempl = new int[240];
 		int resMax;
 		int comMax;
 		int indMax;
@@ -1643,6 +1649,12 @@ public class Micropolis
 			history.crime[i + 1] = history.crime[i];
 			history.pollution[i + 1] = history.pollution[i];
 			history.money[i + 1] = history.money[i];
+			history.pop[i + 1] = history.pop[i];
+			history.rating[i + 1] = history.rating[i];
+			history.house[i + 1] = history.house[i];
+			history.tax[i + 1] = history.tax[i];
+			history.traffic[i + 1] = history.traffic[i];
+			history.unempl[i + 1] = history.unempl[i];
 		}
 
 		history.resMax = resMax;
@@ -1660,6 +1672,15 @@ public class Micropolis
 
 		polluteRamp += (pollutionAverage - polluteRamp) / 4;
 		history.pollution[0] = Math.min(255, polluteRamp);
+
+		//TODO INSTERTAR LAS 6 NUEVAS VARIABLES
+
+		history.pop[0] = evaluation.cityPop;
+		history.rating[0] = evaluation.cityYes;
+		history.house[0] = (int)Math.round(landValueAverage * 0.7);
+		history.tax[0] = cityTax * 10;
+		history.traffic[0] = evaluation.averageTrf();
+		history.unempl[0] = evaluation.getUnemployment();
 
 		int moneyScaled = cashFlow / 20 + 128;
 		if (moneyScaled < 0)
@@ -1719,6 +1740,12 @@ public class Micropolis
 			history.crime[i + 1] = history.crime[i];
 			history.pollution[i + 1] = history.pollution[i];
 			history.money[i + 1] = history.money[i];
+			history.pop[i + 1] = history.pop[i];
+			history.rating[i + 1] = history.rating[i];
+			history.house[i + 1] = history.house[i];
+			history.tax[i + 1] = history.tax[i];
+			history.traffic[i + 1] = history.traffic[i];
+			history.unempl[i + 1] = history.unempl[i];
 		}
 
 		history.res[120] = resPop / 8;
@@ -1727,15 +1754,21 @@ public class Micropolis
 		history.crime[120] = history.crime[0];
 		history.pollution[120] = history.pollution[0];
 		history.money[120] = history.money[0];
+		history.pop[120] = history.pop[0];
+		history.rating[120] = history.rating[0];
+		history.house[120] = history.house[0];
+		history.tax[120] = history.tax[0];
+		history.traffic[120] = history.traffic[0];
+		history.unempl[120] = history.unempl[0];
 	}
 
 	/** Road/rail maintenance cost multiplier, for various difficulty settings.
 	 */
-	static final double [] RLevels = { 0.7, 0.9, 1.2 };
+	static final double [] RLevels = { 0.5, 0.7, 0.9, 1.2, 1.5 };
 
 	/** Tax income multiplier, for various difficulty settings.
 	 */
-	static final double [] FLevels = { 1.4, 1.2, 0.8 };
+	static final double [] FLevels = { 1.6, 1.4, 1.2, 0.8, 0.4 };
 
 	void collectTaxPartial()
 	{
@@ -2327,6 +2360,24 @@ public class Micropolis
 			else if (tagName.equals("money-history")) {
 				loadHistoryArray_v2(history.money, in);
 			}
+			else if (tagName.equals("pop-history")) {
+				loadHistoryArray_v2(history.pop, in);
+			}
+			else if (tagName.equals("rating-history")) {
+				loadHistoryArray_v2(history.rating, in);
+			}
+			else if (tagName.equals("house-history")) {
+				loadHistoryArray_v2(history.house, in);
+			}
+			else if (tagName.equals("tax-history")) {
+				loadHistoryArray_v2(history.tax, in);
+			}
+			else if (tagName.equals("traffic-history")) {
+				loadHistoryArray_v2(history.traffic, in);
+			}
+			else if (tagName.equals("unempl-history")) {
+				loadHistoryArray_v2(history.unempl, in);
+			}
 			else if (tagName.equals("population")) {
 				resPop = Integer.parseInt(in.getAttributeValue(null, "resPop"));
 				comPop = Integer.parseInt(in.getAttributeValue(null, "comPop"));
@@ -2385,6 +2436,12 @@ public class Micropolis
 		loadHistoryArray_v1(history.crime, dis);
 		loadHistoryArray_v1(history.pollution, dis);
 		loadHistoryArray_v1(history.money, dis);
+		loadHistoryArray_v1(history.pop, dis);
+		loadHistoryArray_v1(history.rating, dis);
+		loadHistoryArray_v1(history.house, dis);
+		loadHistoryArray_v1(history.tax, dis);
+		loadHistoryArray_v1(history.traffic, dis);
+		loadHistoryArray_v1(history.unempl, dis);
 		loadMisc_v1(dis);
 		loadMap_v1(dis);
 		dis.close();
@@ -2417,6 +2474,12 @@ public class Micropolis
 		writeHistoryArray("crime-history", history.crime, out);
 		writeHistoryArray("pollution-history", history.pollution, out);
 		writeHistoryArray("money-history", history.money, out);
+		writeHistoryArray("pop-history", history.pop, out);
+		writeHistoryArray("rating-history", history.rating, out);
+		writeHistoryArray("house-history", history.house, out);
+		writeHistoryArray("tax-history", history.tax, out);
+		writeHistoryArray("traffic-history", history.traffic, out);
+		writeHistoryArray("unempl-history", history.unempl, out);
 		writeMisc(out);
 		writeMap(out);
 		out.writeEndElement(); //micropolis
